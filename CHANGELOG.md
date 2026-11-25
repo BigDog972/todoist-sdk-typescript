@@ -1,3 +1,9 @@
+## [24.1.3](https://github.com/todoist/todoist-sdk-typescript/compare/v24.1.2...v24.1.3) (2026-11-25)
+
+### Bug Fixes
+
+* keep the IDs that key dayOrders and projectColors ([#790](https://github.com/todoist/todoist-sdk-typescript/issues/790)) ([b430931](https://github.com/todoist/todoist-sdk-typescript/commit/b4309318fb003fef3d9e40ced7314cf53d411bff))
+
 ## [24.1.2](https://github.com/todoist/todoist-sdk-typescript/compare/v24.1.1...v24.1.2) (2026-11-25)
 
 ### Bug Fixes
