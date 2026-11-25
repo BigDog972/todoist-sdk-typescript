@@ -33,8 +33,14 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
  * directions; only the field name itself is converted. View options' `property_settings`
  * is keyed by opaque property IDs (`field:6Jf8VQXx`) and keeps attributes the SDK doesn't
  * know, which can hold IDs of their own, so no key inside it is safe to rename.
+ * The reorder commands' `id_order_mapping` and `ids_to_orders` are keyed by object IDs,
+ * which mix upper and lower case (`6Jf8VQXx` would be sent as `6_jf8_v_q_xx`).
  */
-const VERBATIM_FIELDS: ReadonlySet<string> = new Set(['property_settings'])
+const VERBATIM_FIELDS: ReadonlySet<string> = new Set([
+    'property_settings',
+    'id_order_mapping',
+    'ids_to_orders',
+])
 
 /**
  * Converts object keys from snake_case to camelCase recursively

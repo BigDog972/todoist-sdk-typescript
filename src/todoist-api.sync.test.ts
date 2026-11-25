@@ -436,6 +436,31 @@ describe('TodoistApi sync endpoint', () => {
         })
     })
 
+    describe('reorder commands', () => {
+        // Todoist IDs mix upper and lower case, so snake-casing them as field names rewrites them.
+        const ids = { '6Jf8VQXxpwv56VQ7': 1, '6X7rM8997g3RQmvh': 2 }
+
+        test.each([
+            ['label_update_orders', { idOrderMapping: ids }, { id_order_mapping: ids }],
+            ['filter_update_orders', { idOrderMapping: ids }, { id_order_mapping: ids }],
+            ['workspace_filter_update_orders', { idOrderMapping: ids }, { id_order_mapping: ids }],
+            ['item_update_day_orders', { idsToOrders: ids }, { ids_to_orders: ids }],
+        ] as const)('sends the IDs in %s unchanged', async (type, commandArgs, expected) => {
+            let args: unknown
+            server.use(
+                http.post(`${getSyncBaseUri()}${ENDPOINT_SYNC}`, async ({ request }) => {
+                    const body = (await request.json()) as { commands: Array<{ args: unknown }> }
+                    args = body.commands[0].args
+                    return HttpResponse.json({})
+                }),
+            )
+
+            await getTarget().sync({ commands: [createCommand(type, commandArgs)] })
+
+            expect(args).toEqual(expected)
+        })
+    })
+
     describe('command results', () => {
         // UUIDs whose segments start with a letter, so camel-casing the response
         // keys would rewrite them.
