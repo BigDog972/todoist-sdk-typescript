@@ -43,6 +43,9 @@ import { BaseClient } from './base-client'
 
 const MAX_COMMAND_COUNT = 100
 
+/** Fields of the completed tasks response keyed by project or section ID. */
+const COMPLETED_TASKS_ID_KEYED_FIELDS: ReadonlySet<string> = new Set(['projects', 'sections'])
+
 /**
  * Internal sub-client handling all task-domain endpoints.
  *
@@ -182,6 +185,8 @@ export class TaskClient extends BaseClient {
                 ...(since ? { since: since.toISOString() } : {}),
                 ...(until ? { until: until.toISOString() } : {}),
             },
+            // Camel-casing would rewrite these IDs (`6Jf8VQXx` → `6Jf8VqXx`).
+            opaqueKeyMaps: COMPLETED_TASKS_ID_KEYED_FIELDS,
         })
         return {
             projects: data.projects as Record<string, Record<string, unknown>>,

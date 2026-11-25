@@ -721,6 +721,41 @@ describe('TodoistApi task endpoints', () => {
             expect(result.projects).toHaveProperty('123')
         })
 
+        test('keys projects and sections by the IDs the API sent', async () => {
+            server.use(
+                http.get(`${getSyncBaseUri()}${ENDPOINT_REST_TASKS_COMPLETED}`, () => {
+                    return HttpResponse.json(
+                        {
+                            items: [
+                                { ...DEFAULT_COMPLETED_TASK_ITEM, project_id: '6Jf8VQXxpwv56VQ7' },
+                            ],
+                            projects: {
+                                '6Jf8VQXxpwv56VQ7': { id: '6Jf8VQXxpwv56VQ7', child_order: 1 },
+                            },
+                            sections: {
+                                '6X7rM8997g3RQmvh': { id: '6X7rM8997g3RQmvh', section_order: 2 },
+                            },
+                        },
+                        { status: 200 },
+                    )
+                }),
+            )
+            const api = getTarget()
+
+            const result = await api.getAllCompletedTasks()
+
+            expect(result.projects).toEqual({
+                '6Jf8VQXxpwv56VQ7': { id: '6Jf8VQXxpwv56VQ7', childOrder: 1 },
+            })
+            expect(result.sections).toEqual({
+                '6X7rM8997g3RQmvh': { id: '6X7rM8997g3RQmvh', sectionOrder: 2 },
+            })
+            expect(result.projects[result.items[0].projectId]).toEqual({
+                id: '6Jf8VQXxpwv56VQ7',
+                childOrder: 1,
+            })
+        })
+
         test('accepts the completed item shape the API returns', async () => {
             server.use(
                 http.get(`${getSyncBaseUri()}${ENDPOINT_REST_TASKS_COMPLETED}`, () => {

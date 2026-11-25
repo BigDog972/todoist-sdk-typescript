@@ -209,7 +209,9 @@ export type GetAllCompletedTasksArgs = {
  * `items` are completion records, not full tasks: see {@link CompletedTaskItem}.
  */
 export type GetAllCompletedTasksResponse = {
+    /** Projects of the returned items, keyed by project ID. Empty when `projectId` is given. */
     projects: Record<string, Record<string, unknown>>
+    /** Sections of the returned items, keyed by section ID. */
     sections: Record<string, Record<string, unknown>>
     items: CompletedTaskItem[]
 }
