@@ -1,3 +1,10 @@
+## [24.1.2](https://github.com/todoist/todoist-sdk-typescript/compare/v24.1.1...v24.1.2) (2026-11-25)
+
+### Bug Fixes
+
+* **sync:** send the IDs in reorder commands unchanged ([#789](https://github.com/todoist/todoist-sdk-typescript/issues/789)) ([f806481](https://github.com/todoist/todoist-sdk-typescript/commit/f806481c1b60521b99ba465191c63bd343064631))
+* **tasks:** key getAllCompletedTasks projects and sections by their IDs ([#788](https://github.com/todoist/todoist-sdk-typescript/issues/788)) ([42b12aa](https://github.com/todoist/todoist-sdk-typescript/commit/42b12aaf3efef4d810210e2c841d1f3d0450a087))
+
 ## [24.1.1](https://github.com/todoist/todoist-sdk-typescript/compare/v24.1.0...v24.1.1) (2026-11-23)
 
 ### Bug Fixes
