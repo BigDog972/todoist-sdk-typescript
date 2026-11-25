@@ -400,6 +400,7 @@ describe('sortTasks date handling', () => {
     test('sorts an IANA-tagged floating time in its own skipped DST hour', () => {
         const tasks = [
             makeTask({ id: 'undated' }),
+            makeTask({ id: 'fixed-0145-utc', due: due('2026-03-29T01:45:00Z') }),
             makeTask({
                 id: 'skipped-london-0130',
                 due: due('2026-03-29T01:30:00', 'Europe/London'),
@@ -416,7 +417,13 @@ describe('sortTasks date handling', () => {
                     { timezone: 'UTC' },
                 ),
             ),
-        ).toEqual(['fixed-0045-utc', 'fixed-0115-utc', 'skipped-london-0130', 'undated'])
+        ).toEqual([
+            'fixed-0045-utc',
+            'fixed-0115-utc',
+            'skipped-london-0130',
+            'fixed-0145-utc',
+            'undated',
+        ])
     })
 
     test('uses UTC when no account timezone is supplied', () => {
